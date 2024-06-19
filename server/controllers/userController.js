@@ -12,6 +12,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
     });
   } else {
     res.status(401);
@@ -30,13 +31,16 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    role: "USER",
   });
   if (user) {
     generateToken(res, user._id);
+    console.log(user);
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
     });
   } else {
     res.status(400);
@@ -57,6 +61,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    role: req.user.role,
   };
   res.status(200).json(user);
 });
@@ -76,6 +81,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      role: updatedUser.role,
     });
   } else {
     res.status(404);
@@ -89,11 +95,9 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-
+  const user = await User.deleteOne({ _id: req.params.id });
   if (user) {
-    await user.remove();
-    res.json({ message: "User removed" });
+    res.status(200).json({ message: "User deleted" });
   } else {
     res.status(404);
     throw new Error("User not found");

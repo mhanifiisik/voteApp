@@ -18,6 +18,7 @@ import ProfileScreen from "./screens/ProfileScreen.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import PollScreen from "./screens/PollScreen.jsx";
 import PollsScreen from "./screens/PollsScreen.jsx";
+import UserManagement from "./components/UserManagement.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="/polls" element={<PollsScreen />} />
         <Route path="/poll/:id" element={<PollScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/admin" element={<UserManagement />} />
       </Route>
     </Route>
   )

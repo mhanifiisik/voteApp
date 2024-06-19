@@ -113,6 +113,33 @@ const getPollResults = asyncHandler(async (req, res) => {
   res.json(result);
 });
 
+const getPollDetails = asyncHandler(async (req, res) => {
+  const pollId = req.params.id;
+  const userId = req.user._id;
+
+  // Find the poll by ID
+  const poll = await Poll.findById(pollId).populate("creator", "name");
+  if (!poll) {
+    res.status(404);
+    throw new Error("Poll not found");
+  }
+
+  // Check if the poll has expired
+  const now = new Date();
+  const isExpired = poll.expiresAt < now;
+
+  // Check if the user has already voted
+  const userVote = await Vote.findOne({
+    user: userId,
+    poll: pollId,
+  });
+
+  res.json({
+    poll,
+    userVote: userVote ? userVote.option : null,
+    isExpired,
+  });
+});
 export {
   createPoll,
   getPolls,
@@ -120,4 +147,5 @@ export {
   updatePoll,
   deletePoll,
   getPollResults,
+  getPollDetails,
 };

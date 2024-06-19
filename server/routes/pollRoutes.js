@@ -6,6 +6,7 @@ import {
   updatePoll,
   deletePoll,
   getPollResults,
+  getPollDetails,
 } from "../controllers/pollController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -134,5 +135,7 @@ router
  *         description: Poll not found
  */
 router.get("/:id/results", protect, getPollResults);
+
+router.route("/:id/details").get(protect, getPollDetails);
 
 export default router;

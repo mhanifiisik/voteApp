@@ -42,6 +42,12 @@ export const pollsApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getPollDetails: builder.query({
+      query: (id) => ({
+        url: `${POLLS_URL}/${id}/details`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -52,4 +58,5 @@ export const {
   useUpdatePollMutation,
   useDeletePollMutation,
   useGetPollResultQuery,
+  useGetPollDetailsQuery,
 } = pollsApiSlice;

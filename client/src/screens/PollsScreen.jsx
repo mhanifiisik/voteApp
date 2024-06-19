@@ -14,8 +14,6 @@ const PollsScreen = () => {
   const [showModal, setShowModal] = useState(false);
   const [showMyPolls, setShowMyPolls] = useState(false);
 
-  console.log(pollsData);
-
   useEffect(() => {
     if (pollsData) {
       setPolls(pollsData);
@@ -53,6 +51,14 @@ const PollsScreen = () => {
           <Button variant="primary" onClick={handleTogglePolls}>
             {showMyPolls ? "All Polls" : "My Polls"}
           </Button>
+
+          {userInfo.role === "ADMIN" && (
+            <Button variant="primary" onClick={handleTogglePolls}>
+              <Link to={`/admin`} className="text-white text-decoration-none">
+                Get All Users
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
       <Row className="gy-4">
